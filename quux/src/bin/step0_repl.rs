@@ -1,5 +1,6 @@
-use std::io;
-use std::io::Write;
+extern crate mal;
+
+use mal::readline::{readline, add_history};
 
 fn read(line: String) -> String {
     line
@@ -22,18 +23,11 @@ fn rep(line: String) -> String {
 
 fn main() {
     loop {
-        print!("user>a ");
-        io::stdout().flush().unwrap();
-
-        let mut line = String::new();
-
-        io::stdin().read_line(&mut line)
-            .ok()
-            .expect("Error reading line");
+        let line = readline("user> ").expect("Error reading line");
+		add_history(&line);
 
         let res = rep(line);
 
-        print!("{}", res);
-        io::stdout().flush().unwrap();
+        println!("{}", res);
     }
 }
